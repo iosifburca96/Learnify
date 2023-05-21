@@ -25,10 +25,9 @@ body {
     left: 0;
     top: 0;
     width: 100vw;
-    height: 40rem;
+    height: auto;
     padding-top: 50px;
     position: absolute;
-    z-index: 3;
   }
   
   /* KEYFRAMES */
@@ -386,10 +385,20 @@ ul {
     width: 70%;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    list-style: none;
 }
+ul li {
+    padding: 10px 0;
+}
+
 ul li a img {
     max-width: 15rem;
     height: auto;
+    transition: .5s ease-in;
+}
+ul li a img:hover {
+    transform: scale(1.1);
+    transition: .5s ease-in;
 }
 
 footer {
@@ -580,9 +589,9 @@ footer {
 }
 .pond {
     position: absolute;
-    top: 50%;
+    top: 40%;
     right: 10%;
-    width: 25%;
+    width: 35%;
     height: auto;
     z-index: 10;
 }
