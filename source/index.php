@@ -70,49 +70,43 @@ require_once "connection.php";
             <h1>Welcome to Learnify - Play2Learn</h1>
             <section class="menu">
                 <nav>
-                    <ul>
+                    <ul  id="categoriesContainer">
                         <li>
-                            <a href="">
-                                <img src="../resources/img/plane1.png" alt="">
+                            <a href="#">
+                                <img id="biology"  class="category-link" src="../resources/img/plane1.png" alt="">
                             </a>
                         </li>
                         <li>
-                            <a href="">
-                                <img src="../resources/img/plane2.png" alt="">
+                            <a href="#">
+                                <img id="astronomy"  class="category-link" src="../resources/img/plane2.png" alt="">
                             </a>
                         </li>
                         <li>
-                            <a href="">
-                                <img src="../resources/img/plane3.png" alt="">
+                            <a href="#">
+                                <img id="math"  class="category-link" src="../resources/img/plane3.png" alt="">
                             </a>
                         </li>
                         <li>
-                            <a href="">
-                                <img src="../resources/img/history.png" alt="">
+                            <a href="#">
+                                <img id="history"  class="category-link" src="../resources/img/history.png" alt="">
                             </a>
                         </li>
                         <li>
-                            <a href="">
-                                <img src="../resources/img/plane4.png" alt="">
+                            <a href="#">
+                                <img id="english"  class="category-link" src="../resources/img/plane4.png" alt="">
                             </a>
                         </li>
                         <li>
-                            <a href="">
-                                <img src="../resources/img/geography.png" alt="">
+                            <a href="#">
+                                <img id="geography"  class="category-link" src="../resources/img/geography.png" alt="">
                             </a>
                         </li>
 
                     </ul>
-                    <div>
-                        <?php  
-                            $query = $conn->query("SELECT * FROM `games`") or die(mysqli_error());
-                            while($fetch = $query->fetch_array()){
-                        ?>
-							<p><?php echo $fetch['name']?></p>
-							<p><?php echo $fetch['questions_nr']?></p>
-                        <?php
-                            }
-                        ?>
+        
+                    <div id="gameslist-container" class="content-container">
+                        
+                    </div>
                 </nav>
                 <div class="login">
                     <p>Log In</p>
