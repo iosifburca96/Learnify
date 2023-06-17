@@ -20,4 +20,18 @@ Categories:
 -tests;
 -quizzes;
 
+Database: 
+    - admin: id, username, email, password
+    - users: id, username, email, password, points
+    - games: id, name, category, number of questions(10)
+    - ranking: username, email, points
+
+Categories:
+    - geography
+    - history
+    - english
+    - astronomy
+    - math
+    - biology
+
 

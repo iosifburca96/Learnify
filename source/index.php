@@ -1,3 +1,8 @@
+<?php
+require_once "connection.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +10,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platforma web de jocuri si teste educationale</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
+    <link rel = "stylesheet" type = "text/css" href = "../css/bootstrap.css " />
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
 </head>
 <body>
     <header>  
@@ -58,51 +67,65 @@
     <main>
         <div class="content">
 
-            <h1>Bine ati venit pe Lernify - Play2Learn</h1>
-            <nav>
-                <ul>
-                    <li>
-                        <a href="">
-                            <img src="../resources/img/plane.png" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="../resources/img/plane.png" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="../resources/img/plane.png" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="../resources/img/plane.png" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="../resources/img/plane.png" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="../resources/img/plane.png" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="../resources/img/plane.png" alt="">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <img src="../resources/img/plane.png" alt="">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <h1>Welcome to Learnify - Play2Learn</h1>
+            <section class="menu">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="">
+                                <img src="../resources/img/plane1.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../resources/img/plane2.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../resources/img/plane3.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../resources/img/history.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../resources/img/plane4.png" alt="">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="../resources/img/geography.png" alt="">
+                            </a>
+                        </li>
+
+                    </ul>
+                    <div>
+                        <?php  
+                            $query = $conn->query("SELECT * FROM `games`") or die(mysqli_error());
+                            while($fetch = $query->fetch_array()){
+                        ?>
+							<p><?php echo $fetch['name']?></p>
+							<p><?php echo $fetch['questions_nr']?></p>
+                        <?php
+                            }
+                        ?>
+                </nav>
+                <div class="login">
+                    <p>Log In</p>
+                    <form method = "POST" class="login-form">
+                        <input type="email" name="email" id="email" placeholder="email" required>
+                        <input type="password" name="password" id="password"  placeholder="password" required>
+                        <input class="login-btn" type="submit" value="Log In">
+					</form>
+                    <p>You don't have an account?</p>
+                    <a href="#" class="signin-btn">Sign in</a>
+                    
+                </div>
+            </section>
 
         </div>
 
@@ -126,6 +149,7 @@
             <div class="hill hill3"></div>
             <div class="hill hill4"></div>
             <div class="hill hill5"></div>
+            <div class="hill hill6"></div>
         </div>
 
         <div class="ground">
@@ -184,6 +208,7 @@
     </footer>
 
 
-    <script src="./script.js"></script>
+    <script src="./script.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>
+
