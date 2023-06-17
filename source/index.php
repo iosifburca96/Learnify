@@ -70,6 +70,7 @@ require_once "connection.php";
             <h1>Welcome to Learnify - Play2Learn</h1>
             <section class="menu">
                 <nav>
+                    <button id="backButton">Go back to categories</button>
                     <ul  id="categoriesContainer">
                         <li>
                             <a href="#">
@@ -101,7 +102,6 @@ require_once "connection.php";
                                 <img id="geography"  class="category-link" src="../resources/img/geography.png" alt="">
                             </a>
                         </li>
-
                     </ul>
         
                     <div id="gameslist-container" class="content-container">

@@ -385,7 +385,10 @@ h1 {
   border-radius: 20px;
 }
 nav {
-  text-align: center;
+  
+}
+nav button {
+  text-align: left;
 }
 .login {
   text-align: center;
@@ -432,6 +435,13 @@ ul li a img {
 ul li a img:hover {
     transform: scale(1.1);
     transition: .2s ease-in;
+}
+#backButton {
+  padding: 10px;
+  font-size: 20px;
+  color: rgb(6, 7, 54);
+  display: inline-block;
+  border-radius: 5px;
 }
 
 footer {

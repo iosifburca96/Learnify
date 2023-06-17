@@ -34,37 +34,25 @@ ropeTrigger.addEventListener('click', changeTheme);
 
 
 
-//categories list games
+// Get a reference to the categories container
+let categoriesContainer = document.getElementById("categoriesContainer");
 // Get a reference to the content container
 let contentContainer = document.getElementById("gameslist-container");
+// Get references to the category links
+let categoryLinks = document.getElementsByClassName("category-link");
+// Add a back button event listener
+let backButton = document.getElementById("backButton");
+backButton.style.display = 'none';
 
-// Get references to the elements you want to listen for clicks on
-let biology = document.getElementById("biology");
-let astronomy = document.getElementById("astronomy");
-let math = document.getElementById("math");
-let history = document.getElementById("history");
-let english = document.getElementById("english");
-let geography = document.getElementById("geography");
-
-// Add click event listeners to the buttons
-biology.addEventListener("click", function() {
-  loadContent("biology");
-});
-astronomy.addEventListener("click", function() {
-  loadContent("astronomy");
-});
-math.addEventListener("click", function() {
-    loadContent("math");
-});
-history.addEventListener("click", function() {
-    loadContent("history");
-});
-english.addEventListener("click", function() {
-    loadContent("english");
+// Add click event listeners to the category links
+for (let i = 0; i < categoryLinks.length; i++) {
+  categoryLinks[i].addEventListener("click", function() {
+    let clickedButton = this.id;
+    loadContent(clickedButton);
+    hideCategoryLinks(clickedButton);
+    backButton.style.display = '';
   });
-geography.addEventListener("click", function() {
-    loadContent("geography");
-});
+}
 
 // Make an AJAX request to the server
 function loadContent(clickedButton) {
@@ -72,6 +60,7 @@ function loadContent(clickedButton) {
     .then(response => response.text())
     .then(data => {
       // Update the content container with the loaded content
+      contentContainer.style.display = '';
       contentContainer.innerHTML = data;
     })
     .catch(error => {
@@ -79,5 +68,29 @@ function loadContent(clickedButton) {
     });
 }
 
+// Hide category links except for the clicked one
+function hideCategoryLinks(clickedButton) {
+  for (let i = 0; i < categoryLinks.length; i++) {
+    let link = categoryLinks[i];
+    if (link.id !== clickedButton) {
+      link.parentElement.parentElement.style.display = "none";
+    }
+  }
+}
+
+// Show all category links again
+function showCategoryLinks() {
+  for (let i = 0; i < categoryLinks.length; i++) {
+    categoryLinks[i].parentElement.parentElement.style.display = "";
+  }
+}
+
+
+
+backButton.addEventListener("click", function() {
+  showCategoryLinks();
+  contentContainer.style.display = 'none';
+  backButton.style.display = 'none';
+});
 // Call the loadContent function to initially load the content
 //loadContent();
