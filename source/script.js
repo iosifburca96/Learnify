@@ -1,10 +1,12 @@
-// light/dark theme functionality
+// LIGHT/DARK THEME 
 
 let ropeTrigger = document.querySelector('.switch img');
 let sun = document.querySelector('.sun');
 let moon = document.querySelector('.moon');
 let darkLogo = document.querySelector('.logo-wrapper .dark');
+let darkLogoS = document.querySelector('.logo-wrapper-s .dark');
 let lightLogo = document.querySelector('.logo-wrapper .light');
+let lightLogoS = document.querySelector('.logo-wrapper-s .light');
 let body = document.body;
 let signinbtn = document.querySelector('.signin-btn');
 
@@ -13,8 +15,16 @@ function changeTheme() {
         //change to dark theme;
         sun.style.visibility = 'hidden';
         moon.style.visibility = 'visible';
-        darkLogo.style.display = 'none';
-        lightLogo.style.display = 'inline';
+        if (darkLogo !== null) {
+          darkLogo.style.display = 'none';
+        } else {
+          darkLogoS.style.display = 'none';
+        }
+        if (lightLogo !== null) {
+          lightLogo.style.display = 'inline';
+        } else {
+          lightLogoS.style.display = 'inline';
+        }
         body.style.backgroundColor = 'rgb(6, 7, 54)';
         body.style.color = 'rgb(0, 255, 0)';
         signinbtn.style.color = 'rgb(6, 7, 54)';
@@ -23,8 +33,16 @@ function changeTheme() {
         //change to light theme;
         moon.style.visibility = 'hidden';
         sun.style.visibility = 'visible';
-        lightLogo.style.display = 'none';
-        darkLogo.style.display = 'inline';
+        if(lightLogo !== null) {
+          lightLogo.style.display = 'none';
+        } else {
+          lightLogoS.style.display = 'none';
+        }
+        if (darkLogo !== null) {
+          darkLogo.style.display = 'inline'; 
+        } else {
+          darkLogoS.style.display = 'inline';
+        }
         body.style.backgroundColor = '#00b4ff';
         body.style.color = 'rgb(6, 7, 54)';
     }
@@ -32,19 +50,14 @@ function changeTheme() {
 
 ropeTrigger.addEventListener('click', changeTheme);
 
+//AJAX LOAD GAMES LIST
 
-
-// Get a reference to the categories container
 let categoriesContainer = document.getElementById("categoriesContainer");
-// Get a reference to the content container
 let contentContainer = document.getElementById("gameslist-container");
-// Get references to the category links
 let categoryLinks = document.getElementsByClassName("category-link");
-// Add a back button event listener
 let backButton = document.getElementById("backButton");
 backButton.style.display = 'none';
 
-// Add click event listeners to the category links
 for (let i = 0; i < categoryLinks.length; i++) {
   categoryLinks[i].addEventListener("click", function() {
     let clickedButton = this.id;
@@ -59,7 +72,6 @@ function loadContent(clickedButton) {
   fetch("load_content.php?button=" + clickedButton)
     .then(response => response.text())
     .then(data => {
-      // Update the content container with the loaded content
       contentContainer.style.display = '';
       contentContainer.innerHTML = data;
     })
@@ -92,5 +104,6 @@ backButton.addEventListener("click", function() {
   contentContainer.style.display = 'none';
   backButton.style.display = 'none';
 });
-// Call the loadContent function to initially load the content
-//loadContent();
+
+
+

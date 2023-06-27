@@ -1,10 +1,10 @@
 -	Simple, bright, intuitive, fun
 -	Name: PLAY2LEARN / Brainy Bytes
 -	Logo with animation in the top center of the page
--	Levels: ground to the moon
--	Name generator
--	Facts generator
--	Fantasy quizzes
+-	Levels: ground to the moon?
+-	Name generator?
+-	Facts generator?
+-	Fantasy quizzes?
 
 Categories: 
 -geography;
@@ -12,13 +12,12 @@ Categories:
 -math;
 -romana: gramatica, literatura;
 -foreign languages: -engleza;
-                    -franceza;
-                    -germana;
+                    -franceza;?
+                    -germana;?
 -biologie;
--cultura generala;
--stiai ca?
--tests;
--quizzes;
+-cultura generala
+-stiai ca?/facts
+-tests/quizzes;
 
 Database: 
     - admin: id, username, email, password
@@ -35,3 +34,17 @@ Categories:
     - biology
 
 
+autentificare login/register
+sesiuni
+teste 80%
+gamelists
+account menu
+baza de date 99%
+student section 80%
+
+
+test update database
+design fixes
+profesor page home(clasament)/ adaugare test
+admin page users for approval /adaugare test
+responsivity

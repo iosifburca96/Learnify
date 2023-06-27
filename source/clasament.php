@@ -1,46 +1,15 @@
 <?php
-require_once "connection.php";
-
+include "connection.php";
 ?>
 <?php
-    // Verificare dacă s-au trimis date de autentificare
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Preluare valori introduse în formular
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+// Verificare dacă utilizatorul este autentificat și are o sesiune validă
+session_start();
 
-        // Realizarea interogarii către baza de date pentru a verifica autenticitatea utilizatorului
-        $query = "SELECT * FROM utilizatori WHERE email = '$email' AND parola = '$password'";
-        $result = mysqli_query($conn, $query);
-
-        // Verificare dacă s-a găsit un rând rezultat
-        if (mysqli_num_rows($result) == 1) {
-            // Autentificarea a reușit
-            // Creare sesiune pentru utilizator și redirecționare către pagina corespunzătoare
-            session_start();
-            $row = mysqli_fetch_assoc($result);
-            $user_type = $row['tip_utilizator'];
-            $user_name = $row['nume'];
-            $_SESSION['email'] = $email;
-            $_SESSION['user_type'] = $user_type;
-            $_SESSION['user_name'] = $user_name;
-
-            if ($user_type == 'student') {
-                header("Location: student_page.php");
-                exit();
-            } elseif ($user_type == 'profesor') {
-                header("Location: profesor_page.php");
-                exit();
-            } elseif ($user_type == 'admin') {
-                header("Location: admin_page.php");
-                exit();
-            }
-        } else {
-            // Autentificarea a eșuat
-            // Afiseaza un mesaj de eroare sau redirectjionare catre o pagină de eroare
-            echo "Autentificare eșuată. Verificați adresa de email și parola.";
-        }
-    }
+if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
+    // Utilizatorul nu este autentificat, redirecționaere către pagina de autentificare
+    header("Location: index.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +57,25 @@ require_once "connection.php";
             <img class="dark" src="../resources/logos/3-dark.png" alt="">
             <img class="light" src="../resources/logos/3-light.png" alt="">
         </div>
+        <?php
+        if (isset($_SESSION['email']) && !empty($_SESSION['email'])) {
+            // Sesiunea este activă
+            $user_type = $_SESSION['user_type'];
+            $user_name = $_SESSION['user_name'];
+
+            echo '<div class="user-message">
+                        <button onclick="toggleMenu()">Logat ca ' . $user_type . ': ' . $user_name . '</button>
+                        <div class="user-menu" id="user-menu">
+                            <ul>
+                                <li><a href="student_page.php">Home</a></li>
+                                <li><a href="logout.php" onclick="event.preventDefault(); document.getElementById(\'logout-form\').submit();">Delogare</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>';
+        }
+        ?>
+
         <div class="sun-wrapper">
             <div class="sun"></div>
         </div>
@@ -108,20 +96,45 @@ require_once "connection.php";
     <main>
         <div class="content">
 
-            <h1>Welcome to Learnify - Play2Learn</h1>
             <section class="menu">
-            
-                <div class="login">
-                    <p>Log In</p>
-                    <form method="POST" class="login-form">
-                        <input type="email" name="email" id="email" placeholder="email" required>
-                        <input type="password" name="password" id="password" placeholder="password" required>
-                        <input class="login-btn" type="submit" value="Log In">
-                    </form>
-                    <p>You don't have an account?</p>
-                    <a href="register.php" class="signin-btn">Sign in</a>
-                </div>
-                <div id="game-content"></div>
+                <?php
+                $sql = "SELECT c.puncte_totale, c.medie, s.nr_teste_finalizate, u.nume
+                        FROM clasament c
+                        JOIN studenti s ON c.student_id = s.id_student
+                        JOIN utilizatori u ON s.utilizator_id = u.id_utilizator
+                        ORDER BY c.medie DESC";
+
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Variabila pentru numarul locului
+                    $locul = 1;
+
+                    // Afisarea datelor
+                    echo "<table>
+                        <tr>
+                            <th>Locul</th>
+                            <th>Nume student</th>
+                            <th>Puncte totale</th>
+                            <th>Nr teste finalizate</th>
+                            <th>Medie</th>
+                        </tr>";
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>
+                            <td>" . $locul . "</td>
+                            <td>" . $row["nume"] . "</td>
+                            <td>" . $row["puncte_totale"] . "</td>
+                            <td>" . $row["nr_teste_finalizate"] . "</td>
+                            <td>" . $row["medie"] . "</td>
+                        </tr>";
+                        $locul++; // Incrementarea numarului locului
+                    }
+                    echo "</table>";
+                } else {
+                    echo "Nu există date disponibile în clasament.";
+                }
+                ?>
+
             </section>
 
         </div>
@@ -204,8 +217,16 @@ require_once "connection.php";
         </div>
     </footer>
 
-
+    <form id="logout-form" action="logout.php" method="POST" style="display: none;">
+        <!-- Este necesar un formular pentru a putea apela logout.php prin intermediul metodei POST -->
+    </form>
     <script src="./script.js?v=<?php echo time(); ?>"></script>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("user-menu");
+            menu.classList.toggle("show");
+        }
+    </script>
 </body>
 
 </html>

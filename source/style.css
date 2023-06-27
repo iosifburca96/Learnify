@@ -150,6 +150,53 @@ body {
     display: none;
 }
 
+.logo-wrapper-s {
+    text-align: left;
+    position: relative;
+    padding: 2rem;
+    z-index: 6;
+}
+.logo-wrapper-s img {
+    max-width: 5rem;
+    height: auto;
+}
+.logo-wrapper-s .light {
+  display: none;
+}
+/* Stilizare pentru butonul și meniul utilizatorului */
+.user-message {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 999;
+}
+
+.user-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.user-menu.show {
+  display: block;
+}
+.user-menu ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.user-menu li {
+  display: block;
+  margin-bottom: 10px;
+}
+
 .sun-wrapper {
     position: absolute;
     top: -14rem;
@@ -384,12 +431,17 @@ h1 {
   background-color: rgba(6, 7, 54, 0.2);
   border-radius: 20px;
 }
-nav {
-  
-}
+
 nav button {
   text-align: left;
 }
+
+.game-btn {
+  padding: 20px;
+  border-radius: 5px;
+  
+}
+
 .login {
   text-align: center;
   padding: 20px;
