@@ -20,10 +20,26 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platforma web de jocuri si teste educationale</title>
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css " />
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
+    <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        font-weight: bold;
+    }
+
+</style>
 </head>
 
 <body>
@@ -66,9 +82,18 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
             echo '<div class="user-message">
                         <button onclick="toggleMenu()">Logat ca ' . $user_type . ': ' . $user_name . '</button>
                         <div class="user-menu" id="user-menu">
-                            <ul>
-                                <li><a href="student_page.php">Home</a></li>
-                                <li><a href="logout.php" onclick="event.preventDefault(); document.getElementById(\'logout-form\').submit();">Delogare</a>
+                            <ul>';
+                                if ($user_type == 'student') {
+                                    echo '<li><a href="student_page.php">Home</a></li>';
+                                } else if ($user_type == 'profesor') {
+                                    echo '<li><a href="teacher_page.php">Home</a></li>';
+                                    echo '<li><a href="adauga_test.php">Adauga Test</a></li>';
+                                } else if ($user_type == 'admin') {
+                                    echo '<li><a href="admin_page.php">Home</a></li>';
+                                    echo '<li><a href="gestiune_utilizatori.php">Gestiune Utilizatori</a></li>';
+                                };
+
+                                echo '<li><a href="logout.php" onclick="event.preventDefault(); document.getElementById(\'logout-form\').submit();">Delogare</a>
                                 </li>
                             </ul>
                         </div>

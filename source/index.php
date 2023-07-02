@@ -21,9 +21,11 @@ require_once "connection.php";
             $row = mysqli_fetch_assoc($result);
             $user_type = $row['tip_utilizator'];
             $user_name = $row['nume'];
+            $user_id = $row['id_utilizator'];
             $_SESSION['email'] = $email;
             $_SESSION['user_type'] = $user_type;
             $_SESSION['user_name'] = $user_name;
+            $_SESSION['utilizator_id'] = $user_id;
 
             if ($user_type == 'student') {
                 header("Location: student_page.php");
@@ -51,7 +53,6 @@ require_once "connection.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platforma web de jocuri si teste educationale</title>
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css " />
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
@@ -121,7 +122,6 @@ require_once "connection.php";
                     <p>You don't have an account?</p>
                     <a href="register.php" class="signin-btn">Sign in</a>
                 </div>
-                <div id="game-content"></div>
             </section>
 
         </div>

@@ -1,0 +1,6 @@
+Array
+(
+    [user_id] => 1
+    [total_points] => 2
+    [test_count] => 1
+)

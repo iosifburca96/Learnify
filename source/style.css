@@ -170,6 +170,11 @@ body {
   left: 10px;
   z-index: 999;
 }
+.user-message button {
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
 
 .user-menu {
   display: none;
@@ -284,6 +289,13 @@ body {
     left: 7px;
     border-radius: 100%;
   }
+  .answer {
+    cursor: pointer;
+  }
+  .selected-answer {
+    background-color: #333; 
+    color: #fff; 
+}
   
   .moon .dark::after {
     content: "";
@@ -424,13 +436,16 @@ h1 {
     text-align: center;
 }
 .menu {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
   margin-top: 20px;
   padding: 40px;
   background-color: rgba(6, 7, 54, 0.2);
   border-radius: 20px;
 }
+
 
 nav button {
   text-align: left;
@@ -471,10 +486,71 @@ nav button {
   padding: 10px;
   border-radius: 5px;
 }
+.btn {
+  text-decoration: none;
+  font-size: 20px;
+  color: rgb(0, 255, 0);
+  background-color: rgb(6, 7, 54);
+  padding: 10px;
+  border-radius: 5px;
+}
+#game-content {
+  text-align: center;
+  padding: 20px;
+
+}
+h1, h2, h3 {
+  text-align: center;
+  margin: 20px;
+}
+#next-question {
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  color: rgb(0, 255, 0);
+  background-color: rgb(6, 7, 54);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.add-test {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  row-gap: 10px;
+  margin: 20px auto;
+}
+.add-test input, .add-test select {
+  padding: 10px;
+  border-radius: 5px;
+}
+.add-test .intrebare {
+  font-weight: bold;
+}
+.add-test input.intrebare {
+  width: 200%;
+  padding: 10px;
+  border-radius: 5px;
+}
+.register-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  row-gap: 10px;
+  margin: 20px auto;
+}
+.register-form input, 
+.register-form select {
+  font-size: 20px;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
 ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
     list-style: none;
+    gap: 40px;
 }
 ul li {
     padding: 20px 0;
@@ -495,7 +571,40 @@ ul li a img:hover {
   display: inline-block;
   border-radius: 5px;
 }
-
+.game-link {
+  text-decoration: none;
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+#question-number {
+  text-align: center;
+}
+.question-container {
+  padding: 20px;
+  margin: 20px;
+}
+.question-container .question {
+  margin: 10px 0;
+  text-align: center;
+}
+.question-container .answer {
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: .3s ease;
+  border: 1px solid transparent;
+}
+.question-container .answer:hover {
+  border: 1px solid green;
+  border-radius: 5px;
+  transition: .3s ease;
+  color:whitesmoke;
+}
 footer {
     position: relative;
     width: 100%;

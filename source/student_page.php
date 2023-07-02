@@ -20,7 +20,6 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platforma web de jocuri si teste educationale</title>
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css " />
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>

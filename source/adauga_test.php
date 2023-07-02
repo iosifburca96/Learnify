@@ -5,7 +5,7 @@ require_once "connection.php";
 // Verificare dacă utilizatorul este autentificat și are o sesiune validă
 session_start();
 
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'profesor' || $_SESSION['user_type'] !== 'admin') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'profesor'  && $_SESSION['user_type'] !== 'admin') {
     // Redirecționați utilizatorul către o altă pagină sau afișați un mesaj de eroare
     header('Location: index.php');
     exit();
@@ -64,8 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 ?>
 
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,7 +73,6 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platforma web de jocuri si teste educationale</title>
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css " />
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
@@ -125,8 +122,14 @@ $conn->close();
             echo '<div class="user-message">
                         <button onclick="toggleMenu()">Logat ca ' . $user_type . ': ' . $user_name . '</button>
                         <div class="user-menu" id="user-menu">
-                            <ul>
-                                <li><a href="clasament.php">Clasament</a></li>
+                            <ul>';
+                            if ($user_type == 'profesor') {
+                                echo '<li><a href="teacher_page.php">Home</a></li>';
+                            } else if ($user_type == 'admin') {
+                                echo '<li><a href="admin_page.php">Home</a></li>';
+                                echo '<li><a href="gestiune_utilizatori.php">Gestiune Utilizatori</a></li>';
+                            };
+                                echo '<li><a href="clasament.php">Clasament</a></li>
                                 <li><a href="logout.php" onclick="event.preventDefault(); document.getElementById(\'logout-form\').submit();">Delogare</a>
                                 </li>
                             </ul>
@@ -159,7 +162,7 @@ $conn->close();
             <section class="menu">
                 <h1>Adaugă Test</h1>
 
-                <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+                <form class="add-test" method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
 
                     <label for="tip_test">Tipul Testului:</label>
 
@@ -169,41 +172,42 @@ $conn->close();
                         <?php } ?>
                     </select>
 
-                    <br><br>
+
 
                     <label for="nume_test">Numele Testului:</label>
                     <input type="text" id="nume_test" name="nume_test">
-                    <br><br>
 
-                    <h2>Întrebări:</h2>
 
+                    <h2>Întrebări:</h2> <br>
+                    <div></div><div></div>
                     <?php for ($i = 1; $i <= 10; $i++) { ?>
-                        <label for="intrebare_<?php echo $i; ?>">Întrebarea <?php echo $i; ?>:</label>
-                        <input type="text" id="intrebare_<?php echo $i; ?>" name="intrebari[<?php echo $i; ?>]">
-                        <br>
+                        <label class="intrebare" for="intrebare_<?php echo $i; ?>">Întrebarea <?php echo $i; ?>:</label>
+                        <input class="intrebare" type="text" id="intrebare_<?php echo $i; ?>" name="intrebari[<?php echo $i; ?>]">
+                        
+                        
 
                         <label for="raspuns1_<?php echo $i; ?>">Răspuns 1:</label>
                         <input type="text" id="raspuns1_<?php echo $i; ?>" name="raspuns1[<?php echo $i; ?>]">
-                        <br>
+                        
 
                         <label for="raspuns2_<?php echo $i; ?>">Răspuns 2:</label>
                         <input type="text" id="raspuns2_<?php echo $i; ?>" name="raspuns2[<?php echo $i; ?>]">
-                        <br>
+                        
 
                         <label for="raspuns3_<?php echo $i; ?>">Răspuns 3:</label>
                         <input type="text" id="raspuns3_<?php echo $i; ?>" name="raspuns3[<?php echo $i; ?>]">
-                        <br>
+                   
 
                         <label for="raspuns4_<?php echo $i; ?>">Răspuns 4:</label>
                         <input type="text" id="raspuns4_<?php echo $i; ?>" name="raspuns4[<?php echo $i; ?>]">
-                        <br>
+                   
 
                         <label for="raspuns_corect_<?php echo $i; ?>">Răspuns Corect:</label>
                         <input type="text" id="raspuns_corect_<?php echo $i; ?>"
                             name="raspunsuri_corecte[<?php echo $i; ?>]">
-                        <br><br>
                     <?php } ?>
-                    <input type="submit" value="Adaugă Test">
+                    <div><br> </div> 
+                    <input class="btn" type="submit" value="Adaugă Test">
                 </form>
 
             </section>

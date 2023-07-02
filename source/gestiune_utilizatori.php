@@ -20,7 +20,6 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platforma web de jocuri si teste educationale</title>
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css " />
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
@@ -45,7 +44,7 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
             var result = confirm("Sigur doriți să aprobați acest utilizator?");
             if (result) {
                 // Redirect sau executați operația de aprobare
-                window.location.href = "aprobare_utilizator.php?user_id=" + userId;
+                window.location.href = "gestiune_utilizatori.php?action=approve&user_id=" + userId;
             }
         }
 
@@ -53,7 +52,7 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
             var result = confirm("Sigur doriți să ștergeți acest utilizator?");
             if (result) {
                 // Redirect sau executați operația de ștergere
-                window.location.href = "sterge_utilizator.php?user_id=" + userId;
+                window.location.href = "gestiune_utilizatori.php?action=delete&user_id=" + userId;
             }
         }
     </script>
@@ -104,6 +103,8 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
                         <button onclick="toggleMenu()">Logat ca ' . $user_type . ': ' . $user_name . '</button>
                         <div class="user-menu" id="user-menu">
                             <ul>
+                                <li><a href="admin_page.php">Home</a></li>
+                                <li><a href="adauga_test.php">Adauga Test</a></li>
                                 <li><a href="clasament.php">Clasament</a></li>
                                 <li><a href="logout.php" onclick="event.preventDefault(); document.getElementById(\'logout-form\').submit();">Delogare</a>
                                 </li>
@@ -139,15 +140,37 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
                 <h1>Gestiune Utilizatori</h1>
 
                 <?php
-                // Verificați dacă a fost efectuată o căutare
-                $searchQuery = "";
-                if (isset($_GET['search'])) {
-                    $search = $_GET['search'];
-                    $searchQuery = " WHERE nume LIKE '%$search%'"; // Înlocuiți "nume" cu coloana corectă din tabela "utilizatori"
+                // Verificați conexiunea
+                if ($conn->connect_error) {
+                    die("Conexiunea la baza de date a eșuat: " . $conn->connect_error);
+                }
+
+                // Verificați dacă s-a trimis o acțiune
+                if (isset($_GET['action'])) {
+                    $action = $_GET['action'];
+                    $userId = $_GET['user_id'];
+
+                    if ($action === "approve") {
+                        // Executați operația de aprobare
+                        $approveQuery = "UPDATE utilizatori SET aprobat = 1 WHERE id_utilizator = $userId";
+                        if ($conn->query($approveQuery) === TRUE) {
+                            echo "<script>alert('Aprobare utilizator cu succes!');</script>";
+                        } else {
+                            echo "<p>Eroare la aprobarea utilizatorului: " . $conn->error . "</p>";
+                        }
+                    } elseif ($action === "delete") {
+                        // Executați operația de ștergere
+                        $deleteQuery = "DELETE FROM utilizatori WHERE id_utilizator = $userId";
+                        if ($conn->query($deleteQuery) === TRUE) {
+                            echo "<script>alert('Stergere utilizator cu succes!');</script>";
+                        } else {
+                            echo "<p>Eroare la ștergerea utilizatorului: " . $conn->error . "</p>";
+                        }
+                    }
                 }
 
                 // Obțineți utilizatorii din tabela "utilizatori"
-                $query = "SELECT * FROM utilizatori" . $searchQuery;
+                $query = "SELECT * FROM utilizatori";
 
                 // Sortare coloane
                 if (isset($_GET['sort'])) {
@@ -170,15 +193,9 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
                 $result = $conn->query($query);
                 ?>
 
-                <form method="GET">
-                    <input type="text" name="search" placeholder="Caută utilizatori..."
-                        value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
-                    <input type="submit" value="Caută">
-                </form>
-
                 <table>
                     <tr>
-                        <th><a href="?sort=id">ID</a></th>
+                        <th><a href="?sort=id_utilizator">ID</a></th>
                         <th><a href="?sort=nume">Nume Utilizator</a></th>
                         <th><a href="?sort=tip_utilizator">Tip Utilizator</a></th>
                         <th><a href="?sort=aprobat">Aprobat</a></th>
@@ -201,9 +218,9 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
                             echo "<td>$aprobat</td>";
                             echo "<td>";
                             if (!$row["aprobat"]) {
-                                echo "<button onclick=\"confirmApproval($userId)\">Aprobare</button>";
+                                echo "<button class='btn' onclick=\"confirmApproval($userId)\">Aprobare</button>";
                             }
-                            echo "<button onclick=\"confirmDelete($userId)\">Ștergere</button>";
+                            echo "<button class='btn' onclick=\"confirmDelete($userId)\">Ștergere</button>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -215,7 +232,6 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
                     $conn->close();
                     ?>
                 </table>
-
 
             </section>
 

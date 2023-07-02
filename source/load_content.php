@@ -11,7 +11,7 @@ $result = $query->get_result();
 
 while($fetch = $result->fetch_assoc()){
   ?>
-   <a href="game.php?id=<?php echo $fetch['id_test']; ?>"><?php echo $fetch['nume_test']; ?></a><br>
+   <a class="game-link" href="game.php?id=<?php echo $fetch['id_test']; ?>"><?php echo $fetch['nume_test']; ?></a><br>
   <?php
 }
 ?>
