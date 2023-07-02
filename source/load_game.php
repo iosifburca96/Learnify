@@ -11,12 +11,12 @@ $query->execute();
 $result = $query->get_result();
 
 while ($fetch = $result->fetch_assoc()) {
-    ?>
+	?>
 
-    <p>
-        <?php echo $fetch['intrebare'] ?>
-    </p>
-    <button>
+	<p>
+		<?php echo $fetch['intrebare'] ?>
+	</p>
+	<button>
 		<?php echo $fetch['raspuns1'] ?>
 	</button> <br>
 	<button>
@@ -28,10 +28,11 @@ while ($fetch = $result->fetch_assoc()) {
 	<button>
 		<?php echo $fetch['raspuns4'] ?>
 	</button> <br>
+
 	<button>
 		Urmatoarea intrebare
 	</button>
 
-    <?php
+	<?php
 }
 ?>
